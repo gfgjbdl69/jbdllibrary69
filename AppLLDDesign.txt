@@ -1,0 +1,118 @@
+
+
+-------Features---------------
+	1. Add the book to system
+	2. Fetch the books from System based on filters
+	3. View All books
+	4. Remove the book
+	5. Request a new book
+	6. Rate and review the book
+	7. User profile
+	8. Author profile
+    9.Update a book
+
+
+    Must
+    Mandatory for application to work
+    1,2,3,4,6,7,9
+
+    Good to have
+    Gives an advantage above other applications
+    5,8
+
+    Nice to have
+    Low priority and can be added at later stage
+
+    --------APIs------
+
+    1.POST -> admin/book
+    	Body
+    	Book Resource
+
+    	On Success
+    	201 -> resource created.
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+
+    	2. GET -> /book
+    	Query params
+    	Rating, Review
+
+    	Body
+    	Null
+
+    	On Success
+    	200 -> List of book
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+    	3. GET -> book/{id}
+
+    	On Success
+    	200 -> book
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+    	4. PUT -> admin/book
+
+    	Body
+    	Book resource
+
+
+    	On Success
+    	200 -> book
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+    	5. DELETE -> admin/book/{id}
+
+    	On Success
+    	204 -> No content
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+
+      6.  POST -> {bookid}/review
+
+    	Body
+    	Review resource
+
+    	On success
+    	201 -> Resource created.
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+    	7. POST -> /user
+    	 Body
+    	User resource
+
+    	On Success
+    	201- > Resource created.
+
+
+    	On failure
+    	400 -> Bad Request
+    	401 -> Unauthorized request
+    	500 -> Server error
+
+
+
