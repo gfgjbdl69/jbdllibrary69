@@ -2,55 +2,62 @@ package com.gfg.library69.service.impl;
 
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
+import com.gfg.library69.repository.BookRepository;
 import com.gfg.library69.service.BookService;
+import com.gfg.library69.service.DBService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
 import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService {
 
-    Map<String,Book> bookMap = new HashMap<>();
+
+    @Autowired
+    BookRepository bookRepository;
+
 
     public void addBook(Book book){
 
-        Integer Id=new Random().nextInt(1,3);
-        book.setId(String.valueOf(Id));
-        bookMap.put(book.getId(),book);
-
+        bookRepository.save(book);
     }
 
-    public Set<Book> getAllBooks(){
+    public List<Book> getAllBooks(){
 
-        return new HashSet<>(bookMap.values());
+       return bookRepository.findAll();
     }
 
-    public Book getBook(String Id){
+    public Book getBook(Integer Id){
 
-        return bookMap.getOrDefault(Id,null);
+        return bookRepository.findById(Id).orElse(null);
     }
-    public void deleteBook(String id){
-      bookMap.remove(id);
+    public void deleteBook(Integer id){
+
+        bookRepository.deleteById(id);
     }
 
-    public Book updateBook(String Id, Book book){
-       if(bookMap.containsKey(Id))
-       {
-           bookMap.put(Id,book);
+    public Book updateBook(Integer Id, Book book){
+       Optional<Book> originalBook=bookRepository.findById(Id);
+       if(originalBook.isPresent()){
+           bookRepository.save(book);
        }
        return book;
     }
 
     @Override
     public void addReview(String bookId, Review review) {
-       Book book=bookMap.getOrDefault(bookId,null);
-
-       if(book!=null)
-       {
-           book.getReviewList().add(review);
-       }
-       bookMap.put(bookId,book);
+//       Book book=bookMap.getOrDefault(bookId,null);
+//
+//       if(book!=null)
+//       {
+//         //  book.getReviewList().add(review);
+//       }
+//       bookMap.put(bookId,book);
     }
+
 }
 
 

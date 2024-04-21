@@ -9,11 +9,11 @@ import java.util.Set;
 public interface BookService {
 
     public void addBook(Book book);
-    public Set<Book> getAllBooks();
-    public Book getBook(String Id);
+    public List<Book> getAllBooks();
+    public Book getBook(Integer Id);
 
-    public void deleteBook(String Id);
-    public Book updateBook(String Id, Book book);
+    public void deleteBook(Integer Id);
+    public Book updateBook(Integer Id, Book book);
 
     public void addReview(String bookId, Review review);
 

@@ -1,9 +1,7 @@
 package com.gfg.library69.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,28 +10,32 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "books")
+@Entity
+@Builder
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    private String id; // not a part of request
     private String title;
     private String author;
+    @Enumerated(value = EnumType.STRING)
     private Genre genre;
-    private Double rating; // not a part of request
+    private Double rating;
     private Double cost;
-    private List<Review> reviewList; // not a part of request
     private Integer year;
+    private String authorEmail;
 
-
-//    @Override
-//    public boolean equals(Object o){
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Book book = (Book) o;
-//        return Objects.equals(getId(), book.getId());
-//    }
-
-    @Override
-    public int hashCode() {
-        return Integer.valueOf(getId());
-    }
 }
+
+
+/***
+ * Types of ID generation
+ *
+ *     TABLE -> keeping a separate table for the Id generation.
+ *     SEQUENCE -> where the last sequence is identified and IDs are updated . -> postgres
+ *     IDENTITY -> which is supported by the under-laying database. eg: mysql, sql server.
+ *     UUID -> generate a unique identifer, randomly generated.
+ *     AUTO -> which will the framwork to support the one by the under-laying data or go forward with Identity.
+ * */

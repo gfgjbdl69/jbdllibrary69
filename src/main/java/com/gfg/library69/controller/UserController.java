@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,12 +19,12 @@ public class UserController {
     BookService bookService;
 
     @GetMapping("/book")
-    public ResponseEntity<Set<Book>> getAllBooks(){
+    public ResponseEntity<List<Book>> getAllBooks(){
         return new ResponseEntity<>(bookService.getAllBooks(),HttpStatus.OK);
     }
 
     @GetMapping("/book/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable("id") String bookId){
+    public ResponseEntity<Book> getBook(@PathVariable("id") Integer bookId){
 
         return new ResponseEntity<>(bookService.getBook(bookId), HttpStatus.OK);
     }
