@@ -22,7 +22,25 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
 
     List<Book> findByAuthorAndGenre(String author, String genre);
 
-    //List<Book> findByAuthorGroupBy(String author,Double rating);
+    // Method to find books by rating sorted in ascending order
+    List<Book> findByOrderByRatingAsc();
+
+    // Method to find books by rating sorted in descending order with pageable response
+    Page<Book> findByOrderByRatingDesc(Pageable pageable);
+
+    /**
+     * Sample pageable request
+     * // Create a Pageable object for the first page with 10 items per page, sorted by rating in descending order
+     * Pageable pageable = PageRequest.of(0, 10, Sort.by("rating").descending());
+     * */
+
+    // Method to find average rating of books grouped by author
+    @Query("SELECT b.author, AVG(b.rating) FROM Book b GROUP BY b.author")
+    List<Book> findAverageRatingByAuthorWithCustomQuery();
+
+    // without JPQL for average
+    // Method to find average rating of books grouped by author
+    List<Book> findAverageRatingByAuthor();
 
     Page<Book> findByRating(Double rating, Pageable pageable);
 
