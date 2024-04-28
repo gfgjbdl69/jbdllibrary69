@@ -40,7 +40,7 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
 
     // without JPQL for average
     // Method to find average rating of books grouped by author
-    List<Book> findAverageRatingByAuthor();
+    List<Book> findAverageRatingByAuthor(String name);
 
     Page<Book> findByRating(Double rating, Pageable pageable);
 

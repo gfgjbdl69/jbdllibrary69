@@ -1,8 +1,10 @@
 package com.gfg.library69.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,6 +29,31 @@ public class Book {
     private Integer year;
     private String authorEmail;
 
+    // Book - Review
+    // One book can have multiple reviews
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade= CascadeType.DETACH)
+    @JsonIgnoreProperties("book")
+    private List<Review> reviewList;
+
+
+    public List<Review> getReviewList() {
+       return reviewList;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", genre=" + genre +
+                ", rating=" + rating +
+                ", cost=" + cost +
+                ", year=" + year +
+                ", authorEmail='" + authorEmail + '\'' +
+                ", reviewList=" + reviewList +
+                '}';
+    }
 }
 
 

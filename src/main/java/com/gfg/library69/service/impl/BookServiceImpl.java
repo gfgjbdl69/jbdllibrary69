@@ -3,8 +3,10 @@ package com.gfg.library69.service.impl;
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
 import com.gfg.library69.repository.BookRepository;
+import com.gfg.library69.repository.ReviewRepository;
 import com.gfg.library69.service.BookService;
 import com.gfg.library69.service.DBService;
+import com.gfg.library69.service.resource.BookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,19 +18,66 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
 
 
-    @Autowired
+
     BookRepository bookRepository;
+
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository){
+        this.bookRepository=bookRepository;
+    }
+
+    @Autowired
+    ReviewRepository reviewRepository;
+    @Autowired
+    BookValidation bookValidation;
+
+    public void setBookValidation(BookValidation bookValidation){
+        this.bookValidation=bookValidation;
+    }
+
 
 
     public void addBook(Book book){
 
+        if(!bookValidation.validateBook(book)){
+
+            throw new IllegalArgumentException("Book is not valid");
+        }
+
+        if(book.getTitle().contains("ABC"))
+        {
+            throw new IllegalStateException("Title cannot be ABC");
+        }
+
+
         bookRepository.save(book);
     }
 
-    public List<Book> getAllBooks(){
 
-       return bookRepository.findAll();
+    // Manual ref for merging entities
+//    public List<BookResponse> getAllBooks(){
+//
+//        List<Book> books=bookRepository.findAll();
+//        List<BookResponse> bookResponses=new ArrayList<BookResponse>();
+//        for(Book book:books){
+//            List<Review> reviews=reviewRepository.findByBookId(book.getId());
+//            bookResponses.add( BookResponse.builder().cost(book.getCost()).title(book.getTitle()).author(book.getAuthor()).rating(book.getRating()).reviewList(reviews).build());
+//
+//        }
+//        // for each book, populate the reviews
+//       return bookResponses;
+//    }
+
+    public List<Book> getAllBooks(){
+        List<Book> bookList=bookRepository.findAll();
+        if(bookList.isEmpty()){
+            throw new IllegalStateException("books list cannot be empty");
+        }
+
+        return bookList;
     }
+
+
 
     public Book getBook(Integer Id){
 

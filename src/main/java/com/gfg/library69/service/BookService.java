@@ -2,6 +2,7 @@ package com.gfg.library69.service;
 
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
+import com.gfg.library69.service.resource.BookResponse;
 
 import java.util.List;
 import java.util.Set;

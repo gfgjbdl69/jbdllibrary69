@@ -4,6 +4,7 @@ package com.gfg.library69.controller;
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
 import com.gfg.library69.service.BookService;
+import com.gfg.library69.service.resource.BookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
