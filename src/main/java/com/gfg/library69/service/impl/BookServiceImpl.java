@@ -70,6 +70,7 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> getAllBooks(){
         List<Book> bookList=bookRepository.findAll();
+        // iterate all books. add top 10 rated books in redis via redistemplate.
         if(bookList.isEmpty()){
             throw new IllegalStateException("books list cannot be empty");
         }
@@ -80,6 +81,8 @@ public class BookServiceImpl implements BookService {
 
 
     public Book getBook(Integer Id){
+
+        //check redisTemplate.get("book"+Id). if found then return. else get from db
 
         return bookRepository.findById(Id).orElse(null);
     }
