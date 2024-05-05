@@ -44,7 +44,7 @@ public class Library69Application implements CommandLineRunner {
 
 
 		Book book=new Book();
-		book.setTitle("testCascade");
+		book.setTitle("Hp-4");
 		book.setAuthor("JK Rowling");
 		book.setGenre(Genre.FANTASY);
 		book.setRating(5.0);
