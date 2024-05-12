@@ -4,7 +4,10 @@ package com.gfg.library69.controller;
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
 import com.gfg.library69.service.BookService;
+import com.gfg.library69.service.UserService;
 import com.gfg.library69.service.resource.BookResponse;
+import com.gfg.library69.service.resource.UserRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,9 @@ public class UserController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/book")
     public ResponseEntity<List<Book>> getAllBooks(){
@@ -37,6 +43,16 @@ public class UserController {
         bookService.addReview(bookId,review);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+    @PostMapping("register")
+    public ResponseEntity<?> register(@RequestBody @Valid UserRequest userRequest){
+
+        userService.addUser(userRequest.toUser());
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 
 
     // add an api for add user

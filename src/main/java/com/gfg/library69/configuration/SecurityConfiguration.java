@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 
 @Configuration
@@ -16,18 +19,28 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
 
     @Bean
+    public CsrfTokenRepository csrfTokenRepository(){
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
+    }
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
-       httpSecurity.cors(Customizer.withDefaults()).csrf(Customizer.withDefaults()).authorizeHttpRequests( authorize ->
+        httpSecurity.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
+        httpSecurity.csrf(csrf -> csrf.disable());
+        httpSecurity.authorizeHttpRequests( authorize ->
                authorize
                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                        .requestMatchers("/greet/**").hasAuthority("USER")
-                       .requestMatchers("/signup").permitAll()
+                       .requestMatchers("/register").permitAll()
+                       .requestMatchers("/login").permitAll()
+                       //.requestMatchers("/error").permitAll()
                        .anyRequest().authenticated()
 
                ).formLogin(Customizer.withDefaults()).httpBasic(Customizer.withDefaults());

@@ -29,11 +29,7 @@ public class Library69Application implements CommandLineRunner {
 	@Autowired
 	BookRepository bookRepository;
 
-	@Autowired
-	BookCascadeSampleImpl bookCascadeSample;
 
-	@Autowired
-	RedisTemplate<String,Object> redisTemplate;
 
 
 
@@ -43,29 +39,29 @@ public class Library69Application implements CommandLineRunner {
 
 
 
-		Book book=new Book();
-		book.setTitle("Hp-4");
-		book.setAuthor("JK Rowling");
-		book.setGenre(Genre.FANTASY);
-		book.setRating(5.0);
-		book.setCost(500.0);
-		book.setYear(2000);
-		List<Review> reviews=new ArrayList<>();
-		reviews.add(new Review());
-
-
-		redisTemplate.opsForValue().set("myJavaKey","myJavaValue");
-		System.out.println(redisTemplate.opsForValue().get("myJavaKey"));
-
-		redisTemplate.opsForList().rightPush("list",1);
-		redisTemplate.opsForList().rightPush("list",2);
-		redisTemplate.opsForList().rightPush("list",3);
-		redisTemplate.opsForList().rightPush("list",4);
-
-		System.out.println(redisTemplate.opsForList().leftPop("list"));
-		System.out.println(redisTemplate.opsForList().rightPop("list"));
-
-		redisTemplate.opsForHash().put("book",book.getTitle(),book);
+//		Book book=new Book();
+//		book.setTitle("Hp-4");
+//		book.setAuthor("JK Rowling");
+//		book.setGenre(Genre.FANTASY);
+//		book.setRating(5.0);
+//		book.setCost(500.0);
+//		book.setYear(2000);
+//		List<Review> reviews=new ArrayList<>();
+//		reviews.add(new Review());
+//
+//
+//		redisTemplate.opsForValue().set("myJavaKey","myJavaValue");
+//		System.out.println(redisTemplate.opsForValue().get("myJavaKey"));
+//
+//		redisTemplate.opsForList().rightPush("list",1);
+//		redisTemplate.opsForList().rightPush("list",2);
+//		redisTemplate.opsForList().rightPush("list",3);
+//		redisTemplate.opsForList().rightPush("list",4);
+//
+//		System.out.println(redisTemplate.opsForList().leftPop("list"));
+//		System.out.println(redisTemplate.opsForList().rightPop("list"));
+//
+//		redisTemplate.opsForHash().put("book",book.getTitle(),book);
 
 
 
