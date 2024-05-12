@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 
@@ -24,26 +25,21 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public CsrfTokenRepository csrfTokenRepository(){
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
-    }
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
         httpSecurity.csrf(csrf -> csrf.disable());
         httpSecurity.authorizeHttpRequests( authorize ->
                authorize
+                       .requestMatchers("**").permitAll()
+                       .requestMatchers("/csrf").permitAll()
                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                        .requestMatchers("/greet/**").hasAuthority("USER")
                        .requestMatchers("/register").permitAll()
                        .requestMatchers("/login").permitAll()
-                       //.requestMatchers("/error").permitAll()
+                       .requestMatchers("/error").permitAll()
                        .anyRequest().authenticated()
 
-               ).formLogin(Customizer.withDefaults()).httpBasic(Customizer.withDefaults());
+               ).formLogin(Customizer.withDefaults()).httpBasic(Customizer.withDefaults()).oauth2Login(Customizer.withDefaults());
        return httpSecurity.build();
 
     }
