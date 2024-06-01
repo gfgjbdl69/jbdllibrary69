@@ -1,10 +1,12 @@
 package com.gfg.library69;
 
+import com.gfg.library69.annotation.MethodInfo;
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Genre;
 import com.gfg.library69.domain.Review;
 import com.gfg.library69.repository.BookRepository;
 import com.gfg.library69.service.impl.BookCascadeSampleImpl;
+import com.gfg.library69.service.impl.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -36,6 +38,14 @@ public class Library69Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		ReviewServiceImpl impl=new ReviewServiceImpl();
+
+		MethodInfo methodInfo=impl.getClass().getMethod("addReview",Review.class).getAnnotation(MethodInfo.class);
+
+		System.out.println(methodInfo.author());
+		System.out.println(methodInfo.description());
+
 
 
 

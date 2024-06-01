@@ -1,5 +1,6 @@
 package com.gfg.library69.service.impl;
 
+import com.gfg.library69.annotation.MethodInfo;
 import com.gfg.library69.domain.Book;
 import com.gfg.library69.domain.Review;
 import com.gfg.library69.repository.BookRepository;
@@ -20,6 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     BookRepository bookRepository;
     @Override
+    @MethodInfo(author = "meet", description = "add review")
     public void addReview(Review review) {
 
         Optional<Book> bookOptional=bookRepository.findById(review.getBook().getId());
