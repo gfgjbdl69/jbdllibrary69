@@ -21,6 +21,7 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<?> addReview(@RequestBody @Valid ReviewRequest reviewRequest){
         reviewService.addReview(reviewRequest.toReview());
+        System.out.println("just practice to create pull request");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
